@@ -11,7 +11,7 @@ The design features a fully pipelined architecture with custom D-Flip-Flops for 
 - **Verification:**
   - **NGSPICE:** Pre-layout and Post-layout simulation and verification.
   - **MAGIC:** Full custom layout and parasitic extraction.
-  - **FPGA:** Hardware validation using Xilinx FPGA Board and oscilloscope.
+  - **FPGA:** Hardware validation using Xilinx FPGA Board(Spartan-7) and digital oscilloscope.
 
 ## Repository Contents
 - **/NGSPICE:** NGSPICE netlists, both pre-layout and post-layout of gates, flip-flops, intermediate blocks, and the final post-layout (extracted netlist). Uses TSMC_180nm.txt file.
@@ -23,3 +23,10 @@ The design features a fully pipelined architecture with custom D-Flip-Flops for 
 ## Performance (Post-Layout)
 - **Worst Case Adder Delay (Post Layout):** 433.57 ps (Combinational Logic)
 - **Max Clock Frequency (Post Layout):** 1.75 GHz (Including FF Setup & Hold constraints)
+
+## Software Tools Used
+- **Simulation:** NGSPICE
+- **Layout & Extraction:** MAGIC Layout
+- **HDL Verification:** Icarus Verilog
+- **Waveform Viewing:** EDA Playground
+- **FPGA Synthesis:** Xilinx Vivado 
