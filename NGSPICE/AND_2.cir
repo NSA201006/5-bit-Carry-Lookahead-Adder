@@ -1,0 +1,39 @@
+2 input AND gate
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+VA A gnd pulse 0 1.8 0ns 100ps 100ps 50ns 100ns
+VB B gnd pulse 0 1.8 0ns 100ps 100ps 100ns 200ns
+
+M1 inter A gnd gnd CMOSN W={2*width} L={2*LAMBDA}
++ AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+M2 Y_bar B inter gnd CMOSN W={2*width} L={2*LAMBDA}
++ AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+M3 Y_bar A vdd vdd CMOSP W={2*width} L={2*LAMBDA}
++ AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+M4 Y_bar B vdd vdd CMOSP W={2*width} L={2*LAMBDA}
++ AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+M5 Y Y_bar vdd vdd CMOSP W={2*width} L={2*LAMBDA}
++ AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+M6 Y Y_bar gnd gnd CMOSN W={width} L={2*LAMBDA}
++ AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+
+.tran 0.1n 200n
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(Y) v(B)+2 v(A)+4
+.endc

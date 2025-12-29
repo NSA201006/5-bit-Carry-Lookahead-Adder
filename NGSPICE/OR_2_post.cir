@@ -1,0 +1,55 @@
+OR 2 post layout
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+VA A gnd pulse 0 1.8 0ns 100ps 100ps 50ns 100ns
+VB B gnd pulse 0 1.8 0ns 100ps 100ps 100ns 200ns
+.option scale=90n
+
+M1000 gnd B Y_bar gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=40p ps=18u
+M1001 Y_bar A gnd gnd CMOSN w=10 l=2
++  ad=40p pd=18u as=50p ps=30u
+M1002 Y_bar B a_14_132# w_0_126# CMOSP w=40 l=2
++  ad=0.2n pd=90u as=0.16n ps=48u
+M1003 a_14_132# A vdd w_0_126# CMOSP w=40 l=2
++  ad=0.16n pd=48u as=0.2n ps=90u
+M1004 Y Y_bar gnd gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+M1005 Y Y_bar vdd w_0_126# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+C0 Y_bar A 0.02579f
+C1 Y_bar B 0.11558f
+C2 Y_bar w_0_126# 0.02511f
+C3 Y_bar gnd 0.04214f
+C4 Y_bar Y 0.04443f
+C5 A B 0.16602f
+C6 w_0_126# A 0.0188f
+C7 w_0_126# B 0.01922f
+C8 gnd A 0.02485f
+C9 gnd B 0.00125f
+C10 Y w_0_126# 0.0061f
+C11 vdd A 0.00117f
+C12 vdd w_0_126# 0.01337f
+C13 gnd 0 0.19832f 
+C14 Y 0 0.07493f 
+C15 Y_bar 0 0.278f 
+C16 vdd 0 0.22309f 
+C17 B 0 0.21744f 
+C18 A 0 0.1884f 
+C19 w_0_126# 0 2.65162f 
+
+.tran 0.1n 200n
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(Y) v(B)+2 v(A)+4
+.endc

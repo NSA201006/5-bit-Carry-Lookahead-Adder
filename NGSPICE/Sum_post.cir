@@ -1,0 +1,122 @@
+Post Layout for the Sum Block
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+VA A gnd pulse 0 1.8 0ns 100ps 100ps 25ns 50ns
+VB B gnd pulse 0 1.8 0ns 100ps 100ps 50ns 100ns
+VC C gnd pulse 0 1.8 0ns 100ps 100ps 100ns 200ns
+
+.option scale=90n
+
+M1000 a_91_70# a_105_102# a_95_12# gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=0.12n ps=52u
+M1001 a_58_8# a_14_70# gnd gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1002 a_28_102# B gnd gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+M1003 a_18_12# A gnd gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+M1004 a_28_102# B vdd w_15_118# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1005 a_18_12# A vdd w_5_28# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1006 a_58_8# a_14_70# vdd w_45_34# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1007 a_14_70# a_28_102# a_18_12# gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=0.12n ps=52u
+M1008 a_105_102# C gnd gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+M1009 a_105_102# C vdd w_92_118# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1010 S a_91_70# vdd w_122_34# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1011 a_95_12# a_58_8# gnd gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+M1012 a_14_70# B A gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=0.12n ps=52u
+M1013 a_91_70# C a_58_8# gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=0.12n ps=52u
+M1014 a_95_12# a_58_8# vdd w_82_28# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1015 S a_91_70# gnd gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+C0 w_15_118# B 0.01897f
+C1 vdd w_82_28# 0.00622f
+C2 a_18_12# a_14_70# 0.11559f
+C3 vdd a_14_70# 0.29706f
+C4 vdd w_45_34# 0.00593f
+C5 w_5_28# A 0.02094f
+C6 vdd w_15_118# 0.00653f
+C7 a_91_70# a_95_12# 0.11559f
+C8 a_28_102# B 0.04402f
+C9 vdd C 0.33777f
+C10 gnd a_95_12# 0.14948f
+C11 S w_122_34# 0.00612f
+C12 w_82_28# a_95_12# 0.00612f
+C13 w_122_34# a_91_70# 0.04973f
+C14 vdd a_58_8# 0.11863f
+C15 a_18_12# A 0.04402f
+C16 a_18_12# w_5_28# 0.00612f
+C17 vdd A 0.11863f
+C18 vdd w_5_28# 0.00622f
+C19 S a_91_70# 0.04402f
+C20 vdd B 0.33777f
+C21 gnd a_91_70# 0.00496f
+C22 a_58_8# a_95_12# 0.04402f
+C23 gnd w_82_28# 0.00675f
+C24 w_92_118# C 0.01897f
+C25 gnd a_14_70# 0.00584f
+C26 a_105_102# w_92_118# 0.00612f
+C27 w_45_34# a_14_70# 0.04973f
+C28 a_105_102# a_91_70# 0.00149f
+C29 a_58_8# a_91_70# 0.04124f
+C30 gnd C 0.02461f
+C31 gnd a_58_8# 0.02491f
+C32 a_58_8# w_82_28# 0.02094f
+C33 gnd A 0.02477f
+C34 gnd w_5_28# 0.00675f
+C35 vdd w_122_34# 0.00593f
+C36 a_58_8# a_14_70# 0.04402f
+C37 a_58_8# w_45_34# 0.00612f
+C38 a_28_102# a_14_70# 0.00149f
+C39 A a_14_70# 0.04124f
+C40 vdd w_92_118# 0.00653f
+C41 a_28_102# w_15_118# 0.00612f
+C42 gnd B 0.02461f
+C43 a_105_102# C 0.04402f
+C44 vdd a_91_70# 0.29706f
+C45 gnd a_18_12# 0.14948f
+C46 S 0 0.06902f 
+C47 a_95_12# 0 0.46377f 
+C48 a_91_70# 0 0.32994f 
+C49 a_58_8# 0 0.94921f 
+C50 a_18_12# 0 0.46377f 
+C51 a_14_70# 0 0.32994f 
+C52 A 0 0.85484f 
+C53 gnd 0 2.25667f 
+C54 a_105_102# 0 0.20038f 
+C55 a_28_102# 0 0.20038f 
+C56 vdd 0 1.52127f 
+C57 C 0 0.32393f 
+C58 B 0 0.32393f 
+C59 w_122_34# 0 0.77138f 
+C60 w_82_28# 0 0.77138f 
+C61 w_45_34# 0 0.77138f 
+C62 w_5_28# 0 0.77138f 
+C63 w_92_118# 0 0.77138f 
+C64 w_15_118# 0 0.77138f 
+
+.tran 0.1n 200n
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(S) v(C)+2 v(B)+4 v(A)+6
+.endc

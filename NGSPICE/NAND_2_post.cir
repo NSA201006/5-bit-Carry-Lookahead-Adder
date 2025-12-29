@@ -1,0 +1,47 @@
+NAND 2 post layout
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+VA A gnd pulse 0 1.8 0ns 100ps 100ps 50ns 100ns
+VB B gnd pulse 0 1.8 0ns 100ps 100ps 100ns 200ns
+
+.option scale=90n
+
+M1000 vdd B Y w_0_0# CMOSP w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1001 Y A vdd w_0_0# CMOSP w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+M1002 Y B a_13_n33# gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1003 a_13_n33# A gnd gnd CMOSN w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+C0 w_0_0# Y 0.00629f
+C1 A vdd 0.00145f
+C2 B Y 0.11578f
+C3 w_0_0# vdd 0.01231f
+C4 A w_0_0# 0.02093f
+C5 vdd B 0.00145f
+C6 A B 0.14197f
+C7 A Y 0.03545f
+C8 w_0_0# B 0.02076f
+C9 gnd 0 0.03764f 
+C10 Y 0 0.10506f 
+C11 vdd 0 0.11593f 
+C12 B 0 0.22536f 
+C13 A 0 0.19888f 
+C14 w_0_0# 0 1.09279f 
+
+.tran 0.1n 200n
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(Y) v(B)+2 v(A)+4
+.endc

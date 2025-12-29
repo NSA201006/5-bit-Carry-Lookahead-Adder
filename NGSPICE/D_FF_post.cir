@@ -1,0 +1,92 @@
+TSPC D flip flop post layout
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+Vclk clk gnd pulse 0 1.8 5ns 100ps 100ps 20ns 40ns
+VD D gnd pulse 0 1.8 0ns 100ps 100ps 35ns 70ns
+
+.option scale=90n
+
+M1000 gnd Y a_57_n28# gnd CMOSN w=20 l=2
++  ad=0.16n pd=56u as=70p ps=27u
+M1001 X clk a_1_n12# w_n12_n18# CMOSP w=40 l=2
++  ad=0.2n pd=90u as=80p ps=44u
+M1002 Q Q_bar gnd gnd CMOSN w=10 l=2
++  ad=70p pd=34u as=50p ps=30u
+M1003 a_1_n12# D vdd w_n12_n18# CMOSP w=40 l=2
++  ad=80p pd=44u as=0.2n ps=90u
+M1004 X D gnd gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+M1005 a_57_n28# clk Q_bar gnd CMOSN w=20 l=2
++  ad=70p pd=27u as=0.14n ps=54u
+M1006 Q Q_bar vdd w_72_n2# CMOSP w=20 l=2
++  ad=0.14n pd=54u as=100p ps=50u
+M1007 a_33_n48# X Y gnd CMOSN w=40 l=2
++  ad=80p pd=44u as=0.2n ps=90u
+M1008 Y clk vdd w_n12_n18# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1009 gnd clk a_33_n48# gnd CMOSN w=40 l=2
++  ad=0.2n pd=90u as=80p ps=44u
+M1010 Q_bar Y vdd w_n12_n18# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+C0 D w_n12_n18# 0.01839f
+C1 w_n12_n18# Q_bar 0.01774f
+C2 Y gnd 0.06495f
+C3 w_n12_n18# clk 0.05955f
+C4 w_72_n2# Q_bar 0.03946f
+C5 X gnd 0.35351f
+C6 X Y 0.00633f
+C7 vdd Q_bar 0.00183f
+C8 D gnd 0.02433f
+C9 vdd clk 0.33325f
+C10 Y a_33_n48# 0.00749f
+C11 Q Q_bar 0.0574f
+C12 X D 0.02918f
+C13 clk gnd 0.00122f
+C14 Y clk 0.08103f
+C15 vdd w_n12_n18# 0.02374f
+C16 X clk 0.03566f
+C17 w_72_n2# vdd 0.00598f
+C18 D clk 0.03399f
+C19 Y w_n12_n18# 0.04417f
+C20 w_72_n2# Q 0.00793f
+C21 Q_bar clk 0.09024f
+C22 X w_n12_n18# 0.00802f
+C23 gnd 0 0.48702f 
+C24 Q 0 0.06436f 
+C25 Q_bar 0 0.35051f 
+C26 X 0 0.249f 
+C27 vdd 0 0.44048f 
+C28 Y 0 0.4223f 
+C29 D 0 0.15223f 
+C30 clk 0 1.47038f 
+C31 w_72_n2# 0 0.83566f 
+C32 w_n12_n18# 0 2.69179f 
+
+.tran 0.1n 200n
+
+.measure tran tpcq0 TRIG v(clk) val=0.9 RISE=2 TARG v(Q) val=0.9 FALL=1
+.measure tran tpcq1 TRIG v(clk) val=0.9 RISE=3 TARG v(Q) val=0.9 RISE=2
+.measure tran tcq param = '(tpcq0+tpcq1)/2'
+* tcq = 62.78 ps 
+
+.measure tran tsu1 TRIG v(D) val=0.9 FALL=1 TARG v(X) val=0.9 RISE=1
+.measure tran tsu0 TRIG v(D) val=0.9 RISE=2 TARG v(X) val=0.9 FALL=2
+.measure tran tsu param = '(tsu1+tsu0)/2'
+* tsu = 48.79 ps
+
+.measure tran thold TRIG v(clk) val=0.9 RISE=2 TARG v(Y) val=0.9 FALL=1
+* thold = 30.17 ps
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(Q) v(D)+2 v(clk)+4
+.endc

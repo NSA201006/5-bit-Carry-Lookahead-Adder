@@ -1,0 +1,18 @@
+* SPICE3 file created from Inverter.ext - technology: scmos
+
+.option scale=90n
+
+M1000 Y A vdd w_n11_n6# pfet w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1001 Y A gnd Gnd nfet w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+C0 gnd A 0.02501f
+C1 w_n11_n6# A 0.019f
+C2 w_n11_n6# Y 0.00615f
+C3 w_n11_n6# vdd 0.00619f
+C4 Y A 0.04402f
+C5 gnd 0 0.05134f **FLOATING
+C6 Y 0 0.069f **FLOATING
+C7 vdd 0 0.05805f **FLOATING
+C8 A 0 0.17142f **FLOATING
+C9 w_n11_n6# 0 0.77138f **FLOATING

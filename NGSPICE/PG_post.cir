@@ -1,0 +1,66 @@
+Post Layout for PG block
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+VA A gnd pulse 0 1.8 0ns 100ps 100ps 50ns 100ns
+VB B gnd pulse 0 1.8 0ns 100ps 100ps 100ns 200ns
+
+.option scale=90n
+
+M1000 p_bar A gnd gnd CMOSN w=10 l=2
++  ad=40p pd=18u as=50p ps=30u
+M1001 a_13_82# A gnd gnd CMOSN w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+M1002 vdd B g_bar w_0_115# CMOSP w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1003 gnd B p_bar gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=40p ps=18u
+M1004 g_bar B a_13_82# gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1005 vdd B a_13_n11# w_n1_n17# CMOSP w=40 l=2
++  ad=0.2n pd=90u as=0.16n ps=48u
+M1006 g_bar A vdd w_0_115# CMOSP w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+M1007 a_13_n11# A p_bar w_n1_n17# CMOSP w=40 l=2
++  ad=0.16n pd=48u as=0.2n ps=90u
+C0 gnd vdd 0.00154f
+C1 gnd A 0.00258f
+C2 vdd w_n1_n17# 0.03252f
+C3 p_bar gnd 0.02776f
+C4 A w_n1_n17# 0.01892f
+C5 p_bar w_n1_n17# 0.02041f
+C6 w_0_115# B 0.02076f
+C7 g_bar B 0.11578f
+C8 vdd B 0.00233f
+C9 A B 1.0489f
+C10 p_bar B 0.14761f
+C11 w_0_115# g_bar 0.00629f
+C12 w_0_115# vdd 0.02851f
+C13 g_bar vdd 0.00553f
+C14 gnd B 0.30524f
+C15 w_0_115# A 0.02093f
+C16 A g_bar 0.03545f
+C17 A vdd 0.00161f
+C18 w_n1_n17# B 0.0188f
+C19 p_bar vdd 0.00755f
+C20 p_bar A 0.05914f
+C21 p_bar 0 0.17234f
+C22 gnd 0 0.11913f
+C23 g_bar 0 0.10801f
+C24 vdd 0 2.13553f
+C25 B 0 0.5721f
+C26 A 0 0.62385f
+C27 w_n1_n17# 0 1.88024f
+C28 w_0_115# 0 1.09279f
+
+.tran 0.1n 200n
+
+.control
+run
+plot v(p_bar) v(g_bar)+2 v(B)+4 v(A)+6
+.endc

@@ -1,0 +1,69 @@
+Post Layout for the new PG block
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+VA A gnd pulse 0 1.8 0ns 100ps 100ps 50ns 100ns
+VB B gnd pulse 0 1.8 0ns 100ps 100ps 100ns 200ns
+
+.option scale=90n
+
+M1000 p_bar B gnd gnd CMOSN w=10 l=2
++  ad=40p pd=18u as=50p ps=30u
+M1001 g_bar A vdd w_n69_n66# CMOSP w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+M1002 a_n56_n20# A gnd gnd CMOSN w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+M1003 vdd B g_bar w_n69_n66# CMOSP w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1004 p_bar A a_n56_40# w_n69_34# CMOSP w=40 l=2
++  ad=0.2n pd=90u as=0.16n ps=48u
+M1005 g_bar B a_n56_n20# gnd CMOSN w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1006 a_n56_40# B vdd w_n69_34# CMOSP w=40 l=2
++  ad=0.16n pd=48u as=0.2n ps=90u
+M1007 gnd A p_bar gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=40p ps=18u
+C0 w_n69_34# B 0.0188f
+C1 gnd B 0.15697f
+C2 p_bar B 0.04277f
+C3 p_bar w_n69_34# 0.00787f
+C4 g_bar A 0.04422f
+C5 A w_n69_n66# 0.02095f
+C6 A B 1.11616f
+C7 gnd p_bar 0.02392f
+C8 g_bar vdd 0.00674f
+C9 vdd w_n69_n66# 0.03221f
+C10 A w_n69_34# 0.01919f
+C11 vdd B 0.00299f
+C12 vdd w_n69_34# 0.03448f
+C13 gnd A 0.00307f
+C14 p_bar A 0.14886f
+C15 gnd vdd 0.00133f
+C16 p_bar vdd 0.00752f
+C17 A vdd 0.00229f
+C18 g_bar w_n69_n66# 0.00821f
+C19 g_bar B 0.12848f
+C20 w_n69_n66# B 0.02076f
+C21 g_bar 0 0.11348f 
+C22 gnd 0 0.10716f 
+C23 p_bar 0 0.10654f 
+C24 vdd 0 2.06797f 
+C25 A 0 0.59158f 
+C26 B 0 0.48581f 
+C27 w_n69_n66# 0 1.09279f 
+C28 w_n69_34# 0 1.77578f 
+
+.tran 0.1n 200n
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(p_bar) v(g_bar)+2 v(B)+4 v(A)+6
+.endc

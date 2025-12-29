@@ -1,0 +1,106 @@
+.subckt Inverter A Y vdd gnd
+    M1 Y A vdd vdd CMOSP W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M2 Y A gnd gnd CMOSN W={width} L={2*LAMBDA}
+    + AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+.ends
+
+.subckt NAND A B Y vdd gnd
+    M1 inter A gnd gnd CMOSN W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M2 Y B inter gnd CMOSN W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M3 Y A vdd vdd CMOSP W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M4 Y B vdd vdd CMOSP W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+.ends
+
+.subckt NOR A B Y vdd gnd
+    M1 Y A gnd gnd CMOSN W={width} L={2*LAMBDA}
+    + AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+
+    M2 Y B gnd gnd CMOSN W={width} L={2*LAMBDA}
+    + AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+
+    M3 Y A inter vdd CMOSP W={4*width} L={2*LAMBDA}
+    + AS={5*4*width*LAMBDA} PS={10*LAMBDA+2*4*width} AD={5*4*width*LAMBDA} PD={10*LAMBDA+2*4*width}
+
+    M4 inter B vdd vdd CMOSP W={4*width} L={2*LAMBDA}
+    + AS={5*4*width*LAMBDA} PS={10*LAMBDA+2*4*width} AD={5*4*width*LAMBDA} PD={10*LAMBDA+2*4*width}
+.ends
+
+.subckt AND A B Y vdd gnd 
+    XNAND A B inter vdd gnd NAND
+    XInv inter Y vdd gnd Inverter
+.ends
+
+.subckt OR A B Y vdd gnd 
+    XNOR A B inter vdd gnd NOR
+    XInv inter Y vdd gnd Inverter
+.ends
+
+.subckt XOR A B Y vdd gnd
+    M1 A_bar A vdd vdd CMOSP W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M2 A_bar A gnd gnd CMOSN W={width} L={2*LAMBDA}
+    + AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+
+    M3 B_bar B vdd vdd CMOSP W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M4 B_bar B gnd gnd CMOSN W={width} L={2*LAMBDA}
+    + AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+
+    M5 B A Y_bar gnd CMOSN W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M6 B_bar A_bar Y_bar gnd CMOSN W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M7 Y Y_bar vdd vdd CMOSP W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M8 Y Y_bar gnd gnd CMOSN W={2*width} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+.ends
+
+.subckt DFF clk D Q vdd gnd
+     M3 A D vdd vdd CMOSP W={width*4} L={2*LAMBDA}
+    + AS={5*4*width*LAMBDA} PS={10*LAMBDA+2*4*width} AD={5*4*width*LAMBDA} PD={10*LAMBDA+2*4*width}
+
+    M2 X clk A vdd CMOSP W={width*4} L={2*LAMBDA}
+    + AS={5*4*width*LAMBDA} PS={10*LAMBDA+2*4*width} AD={5*4*width*LAMBDA} PD={10*LAMBDA+2*4*width}
+
+    M1 X D gnd gnd CMOSN W={width} L={2*LAMBDA}
+    + AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+
+    M6 Y clk vdd vdd CMOSP W={width*2} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M5 Y X B gnd CMOSN W={width*4} L={2*LAMBDA}
+    + AS={5*4*width*LAMBDA} PS={10*LAMBDA+2*4*width} AD={5*4*width*LAMBDA} PD={10*LAMBDA+2*4*width}
+
+    M4 B clk gnd gnd CMOSN W={width*4} L={2*LAMBDA}
+    + AS={5*4*width*LAMBDA} PS={10*LAMBDA+2*4*width} AD={5*4*width*LAMBDA} PD={10*LAMBDA+2*4*width}
+
+    M9 Q_bar Y vdd vdd CMOSP W={width*2} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M8 Q_bar clk C gnd CMOSN W={width*2} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M7 C Y gnd gnd CMOSN W={width*2} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M11 Q Q_bar vdd vdd CMOSP W={width*2} L={2*LAMBDA}
+    + AS={5*2*width*LAMBDA} PS={10*LAMBDA+2*2*width} AD={5*2*width*LAMBDA} PD={10*LAMBDA+2*2*width}
+
+    M10 Q Q_bar gnd gnd CMOSN W={width} L={2*LAMBDA}
+    + AS={5*width*LAMBDA} PS={10*LAMBDA+2*width} AD={5*width*LAMBDA} PD={10*LAMBDA+2*width}
+.ends

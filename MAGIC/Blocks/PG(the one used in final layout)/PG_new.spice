@@ -1,0 +1,49 @@
+* SPICE3 file created from PG_new.ext - technology: scmos
+
+.option scale=90n
+
+M1000 p_bar B gnd Gnd nfet w=10 l=2
++  ad=40p pd=18u as=50p ps=30u
+M1001 g_bar A vdd w_n69_n66# pfet w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+M1002 a_n56_n20# A gnd Gnd nfet w=20 l=2
++  ad=80p pd=28u as=100p ps=50u
+M1003 vdd B g_bar w_n69_n66# pfet w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1004 p_bar A a_n56_40# w_n69_34# pfet w=40 l=2
++  ad=0.2n pd=90u as=0.16n ps=48u
+M1005 g_bar B a_n56_n20# Gnd nfet w=20 l=2
++  ad=100p pd=50u as=80p ps=28u
+M1006 a_n56_40# B vdd w_n69_34# pfet w=40 l=2
++  ad=0.16n pd=48u as=0.2n ps=90u
+M1007 gnd A p_bar Gnd nfet w=10 l=2
++  ad=50p pd=30u as=40p ps=18u
+C0 w_n69_34# B 0.0188f
+C1 gnd B 0.15697f
+C2 p_bar B 0.04277f
+C3 p_bar w_n69_34# 0.00787f
+C4 g_bar A 0.04422f
+C5 A w_n69_n66# 0.02095f
+C6 A B 1.11616f
+C7 gnd p_bar 0.02392f
+C8 g_bar vdd 0.00674f
+C9 vdd w_n69_n66# 0.03221f
+C10 A w_n69_34# 0.01919f
+C11 vdd B 0.00299f
+C12 vdd w_n69_34# 0.03448f
+C13 gnd A 0.00307f
+C14 p_bar A 0.14886f
+C15 gnd vdd 0.00133f
+C16 p_bar vdd 0.00752f
+C17 A vdd 0.00229f
+C18 g_bar w_n69_n66# 0.00821f
+C19 g_bar B 0.12848f
+C20 w_n69_n66# B 0.02076f
+C21 g_bar 0 0.11348f **FLOATING
+C22 gnd 0 0.10716f **FLOATING
+C23 p_bar 0 0.10654f **FLOATING
+C24 vdd 0 2.06797f **FLOATING
+C25 A 0 0.59158f **FLOATING
+C26 B 0 0.48581f **FLOATING
+C27 w_n69_n66# 0 1.09279f **FLOATING
+C28 w_n69_34# 0 1.77578f **FLOATING

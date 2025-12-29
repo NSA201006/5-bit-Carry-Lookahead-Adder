@@ -1,0 +1,117 @@
+Final 5 bit CLA Adder in NGSPICE 
+
+.include TSMC_180nm.txt
+.include gates.cir
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+Vclk clk gnd pulse 1.8 0 0 1ps 1ps 393ps 788ps
+VA0 A0_in gnd 1.8
+VA1 A1_in gnd 1.8
+VA2 A2_in gnd 0
+VA3 A3_in gnd 1.8
+VA4 A4_in gnd 1.8
+VB0 B0_in gnd 0
+VB1 B1_in gnd 1.8
+VB2 B2_in gnd 1.8
+VB3 B3_in gnd 0
+VB4 B4_in gnd 1.8
+
+XXOR1 a0 b0 s0 vdd gnd XOR
+XXOR2 a1 b1 p1 vdd gnd XOR
+XXOR3 p1 c1 s1 vdd gnd XOR
+XXOR4 a2 b2 p2 vdd gnd XOR
+XXOR5 p2 c2 s2 vdd gnd XOR
+XXOR6 a3 b3 p3 vdd gnd XOR
+XXOR7 p3 c3 s3 vdd gnd XOR
+XXOR8 a4 b4 p4 vdd gnd XOR
+XXOR9 p4 c4 s4 vdd gnd XOR
+
+* XNOR1 a0 b0 p0_bar vdd gnd NOR // not required anywhere
+XNOR2 a1 b1 p1_bar vdd gnd NOR
+XNOR3 a2 b2 p2_bar vdd gnd NOR
+XNOR4 a3 b3 p3_bar vdd gnd NOR
+XNOR5 a4 b4 p4_bar vdd gnd NOR
+
+XNAND1 a0 b0 g0_bar vdd gnd NAND
+XNAND2 a1 b1 g1_bar vdd gnd NAND
+XNAND3 a2 b2 g2_bar vdd gnd NAND
+XNAND4 a3 b3 g3_bar vdd gnd NAND
+XNAND5 a4 b4 g4_bar vdd gnd NAND
+
+XDFF1 clk A0_in a0 vdd gnd DFF
+XDFF2 clk A1_in a1 vdd gnd DFF
+XDFF3 clk A2_in a2 vdd gnd DFF
+XDFF4 clk A3_in a3 vdd gnd DFF
+XDFF5 clk A4_in a4 vdd gnd DFF
+
+XDFF6 clk B0_in b0 vdd gnd DFF
+XDFF7 clk B1_in b1 vdd gnd DFF
+XDFF8 clk B2_in b2 vdd gnd DFF
+XDFF9 clk B3_in b3 vdd gnd DFF
+XDFF10 clk B4_in b4 vdd gnd DFF
+
+XDFF11 clk s0 S0_out vdd gnd DFF
+XDFF12 clk s1 S1_out vdd gnd DFF
+XDFF13 clk s2 S2_out vdd gnd DFF
+XDFF14 clk s3 S3_out vdd gnd DFF
+XDFF15 clk s4 S4_out vdd gnd DFF
+
+XDFF16 clk c5 COUT_out vdd gnd DFF
+
+XNOT g0_bar c1 vdd gnd Inverter
+
+XOR1 p1_bar g0_bar w_2_1 vdd gnd OR
+XNAND6 w_2_1 g1_bar c2 vdd gnd NAND
+
+XNOR6 p2_bar p1_bar w_3_1 vdd gnd NOR
+XOR2 p2_bar g1_bar w_3_2 vdd gnd OR
+XNAND7 w_3_2 g2_bar w_3_3 vdd gnd NAND
+XAND1 w_3_1 c1 w_3_4 vdd gnd AND
+XOR3 w_3_4 w_3_3 c3 vdd gnd OR
+
+XNOR7 p3_bar p2_bar w_4_1 vdd gnd NOR
+XOR4 p3_bar g2_bar w_4_2 vdd gnd OR
+XNAND8 w_4_2 g3_bar w_4_3 vdd gnd NAND
+XAND2 w_4_1 c2 w_4_4 vdd gnd AND
+XOR5 w_4_4 w_4_3 c4 vdd gnd OR
+
+XNOR8 p4_bar p3_bar w_5_1 vdd gnd NOR
+XOR6 p4_bar g3_bar w_5_2 vdd gnd OR
+XNAND9 w_5_2 g4_bar w_5_3 vdd gnd NAND
+XAND3 w_5_1 c3 w_5_4 vdd gnd AND
+XOR7 w_5_4 w_5_3 c5 vdd gnd OR
+
+Xload1 S0_out dum0 vdd gnd Inverter
+Xload2 S1_out dum1 vdd gnd Inverter
+XLoad3 S2_out dum2 vdd gnd Inverter
+Xload4 S3_out dum3 vdd gnd Inverter
+Xload5 S4_out dum4 vdd gnd Inverter
+Xload6 COUT_out dum5 vdd gnd Inverter
+
+.tran 0.01n 5n
+
+* .measure tran t_logic_max TRIG v(a0) val=0.9 RISE=1 TARG v(c5) val=0.9 RISE=1
+* 585.23 ps 01111 + 10111
+
+* .measure tran t_logic_min TRIG v(a0) val=0.9 RISE=1 TARG v(s0) val=0.9 RISE=1
+* * 99.27 ps 00001 + 00000
+
+.measure tran t_logic_max TRIG v(a0) val=0.9 RISE=1 TARG v(s4) val=0.9 RISE=1
+* 592.53 ps 11011 + 10110
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(S0_out) v(S1_out)+2 v(S2_out)+4 v(S3_out)+6 v(S4_out)+8 v(COUT_out)+10 v(clk)+12
+* plot v(a0) v(c5)+2 v(clk)+4 // worst case
+* plot v(a0) v(s0)+2 v(clk)+4 // best case
+plot v(a0) v(s4)+2 v(clk)+4 // the worst case pre layout
+plot v(A0_in) v(A1_in)+2 v(A2_in)+4 v(A3_in)+6 v(A4_in)+8
+plot v(B0_in) v(B1_in)+2 v(B2_in)+4 v(B3_in)+6 v(B4_in)+8
+.endc

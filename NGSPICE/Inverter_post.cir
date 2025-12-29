@@ -1,0 +1,37 @@
+Inverter post layout
+
+.include TSMC_180nm.txt
+.param supply=1.8
+.param LAMBDA=0.09u
+.param width=10*LAMBDA 
+.global gnd vdd
+
+Vrail vdd gnd {supply}
+VA A gnd pulse 0 1.8 0ns 100ps 100ps 50ns 100ns
+
+.option scale=90n
+
+M1000 Y A vdd w_n11_n6# CMOSP w=20 l=2
++  ad=100p pd=50u as=100p ps=50u
+M1001 Y A gnd gnd CMOSN w=10 l=2
++  ad=50p pd=30u as=50p ps=30u
+C0 gnd A 0.02501f
+C1 w_n11_n6# A 0.019f
+C2 w_n11_n6# Y 0.00615f
+C3 w_n11_n6# vdd 0.00619f
+C4 Y A 0.04402f
+C5 gnd 0 0.05134f 
+C6 Y 0 0.069f 
+C7 vdd 0 0.05805f 
+C8 A 0 0.17142f 
+C9 w_n11_n6# 0 0.77138f 
+
+.tran 0.1n 100n
+
+.control
+run
+set color0 = white
+set color1 = black
+set curplottitle = 'NagamallaSaiAbhinav_2024102037'
+plot v(Y) v(A)+2
+.endc
