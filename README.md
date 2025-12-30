@@ -6,7 +6,7 @@ This repository contains the complete VLSI design and implementation of a **5-bi
 The design features a fully pipelined architecture with custom D-Flip-Flops for input/output synchronization and has been verified through schematic simulation, post-layout extraction, and FPGA hardware implementation.
 
 ## Key Features
-- **Technology:** TSMC 180 nm CMOS technology with VDD = 1.8 V.
+- **Technology:** TSMC 180 nm technology with VDD = 1.8 V.
 - **Architecture:** 5-bit CLA with registered inputs and outputs.
 - **Verification:**
   - **NGSPICE:** Pre-layout and Post-layout simulation and verification.
@@ -14,12 +14,14 @@ The design features a fully pipelined architecture with custom D-Flip-Flops for 
   - **FPGA:** Hardware validation using Xilinx FPGA Board (Spartan-7) and digital oscilloscope.
 
 ## Design Highlights
-- CMOS implementation of logic gates (NOT, AND, OR, XOR, NAND, NOR) and D flip-flops using TSPC topology.
+- CMOS implementation of logic gates (NOT, AND, OR, NAND, NOR), PTL implementation of XOR gate and D flip-flops using TSPC topology.
 - Carry Look-Ahead Adder implemented to minimize carry propagation delay.
 - Hierarchical computation of generate and propagate signals for parallel carry computation.
 - Sizing optimized for performance: (W_P/W_N = 20λ/10λ).
 - Common VDD and GND rails with all interconnections implemented using three metal layers.
 - Post-layout results show improvement due to optimized layout and reduced parasitic effects in the actual implementation.
+- Static CMOS eliminates static power and improves noise immunity.
+- TSPC flip-flops provide excellent speed with minimal hold time.
 
 ## MAGIC Layout Floorplan Strategy
 
@@ -59,6 +61,18 @@ The detailed floorplan and layout methodology are presented in the project repor
 
 ## Documentation
 The complete design methodology, derivations, STA analysis, stick diagrams and pre-layout versus post-layout comparisons are discussed in detail in the project report.
+
+## Future Improvements
+
+### Performance Enhancements
+- **Pipelining:** Insert pipeline registers in carry logic for higher throughput
+- **Dynamic logic:** Use domino logic for critical carry paths
+- **Transistor optimization:** Advanced sizing using optimization algorithms
+- **Improve Static Power Consumption:** Adding a weak keeper for PTL Style logic (XOR gate). 
+
+### Functionality Extensions
+- **Wider bit-width:** Extend to 16-bit or 32-bit using hierarchical CLA
+- **Hybrid architectures:** Combine CLA with ripple-carry for area-efficient scaling
 
 ## Repository Structure
 
